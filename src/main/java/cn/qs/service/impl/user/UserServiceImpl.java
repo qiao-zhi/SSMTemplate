@@ -15,7 +15,7 @@ import cn.qs.bean.user.UserExample;
 import cn.qs.bean.user.UserExample.Criteria;
 import cn.qs.mapper.user.UserMapper;
 import cn.qs.service.user.UserService;
-import cn.qs.utils.MD5Util;
+import cn.qs.utils.MD5Utils;
 
 @Service
 @Transactional
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUser(User user) {
 		if (StringUtils.isNotBlank(user.getPassword())) {
-			user.setPassword(MD5Util.md5(user.getPassword(), ""));// md5加密密码
+			user.setPassword(MD5Utils.md5(user.getPassword()));
 		} else {
 			user.setPassword(null);
 		}
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 		UserExample userExample = new UserExample();
 		Criteria createCriteria = userExample.createCriteria();
 		createCriteria.andUsernameEqualTo(username);
-		createCriteria.andPasswordEqualTo(MD5Util.md5(password, ""));
+		createCriteria.andPasswordEqualTo(MD5Utils.md5(password));
 
 		List<User> selectByExample = userMapper.selectByExample(userExample);
 		if (CollectionUtils.isNotEmpty(selectByExample)) {

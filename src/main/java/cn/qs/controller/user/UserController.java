@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,7 @@ import cn.qs.bean.user.User;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.DefaultValue;
 import cn.qs.utils.JSONResultUtil;
-import cn.qs.utils.MD5Util;
-import cn.qs.utils.ValidateCheck;
+import cn.qs.utils.MD5Utils;
 
 @Controller
 @RequestMapping("user")
@@ -65,7 +65,7 @@ public class UserController {
 		}
 
 		user.setCreatetime(new Date());
-		user.setPassword(MD5Util.md5(user.getPassword(), ""));// md5加密密码
+		user.setPassword(MD5Utils.md5(user.getPassword()));// md5加密密码
 		logger.info("user -> {}", user);
 		userService.addUser(user);
 		return JSONResultUtil.ok();
@@ -75,11 +75,11 @@ public class UserController {
 	@ResponseBody
 	public PageInfo<User> getUsers(@RequestParam Map condition) {
 		int pageNum = 1;
-		if (ValidateCheck.isNotNull(MapUtils.getString(condition, "pageNum"))) { // 如果不为空的话改变当前页号
+		if (StringUtils.isNotBlank(MapUtils.getString(condition, "pageNum"))) { // 如果不为空的话改变当前页号
 			pageNum = MapUtils.getInteger(condition, "pageNum");
 		}
 		int pageSize = DefaultValue.PAGE_SIZE;
-		if (ValidateCheck.isNotNull(MapUtils.getString(condition, "pageSize"))) { // 如果不为空的话改变当前页大小
+		if (StringUtils.isNotBlank(MapUtils.getString(condition, "pageSize"))) { // 如果不为空的话改变当前页大小
 			pageSize = MapUtils.getInteger(condition, "pageSize");
 		}
 

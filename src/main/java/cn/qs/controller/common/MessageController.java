@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import cn.qs.bean.common.Message;
 import cn.qs.service.common.MessageService;
 import cn.qs.utils.DefaultValue;
 import cn.qs.utils.JSONResultUtil;
-import cn.qs.utils.ValidateCheck;
 
 @Controller
 @RequestMapping("message")
@@ -55,11 +55,11 @@ public class MessageController {
 	@ResponseBody
 	public Page<Message> getMessages(@RequestParam Map condition, HttpServletRequest request) {
 		int pageNum = 1;
-		if (ValidateCheck.isNotNull(MapUtils.getString(condition, "pageNum"))) { // 如果不为空的话改变当前页号
+		if (StringUtils.isNotBlank(MapUtils.getString(condition, "pageNum"))) { // 如果不为空的话改变当前页号
 			pageNum = MapUtils.getInteger(condition, "pageNum");
 		}
 		int pageSize = DefaultValue.PAGE_SIZE;
-		if (ValidateCheck.isNotNull(MapUtils.getString(condition, "pageSize"))) { // 如果不为空的话改变当前页大小
+		if (StringUtils.isNotBlank(MapUtils.getString(condition, "pageSize"))) { // 如果不为空的话改变当前页大小
 			pageSize = MapUtils.getInteger(condition, "pageSize");
 		}
 
