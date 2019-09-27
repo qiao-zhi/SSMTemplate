@@ -1,5 +1,9 @@
 package cn.qs.controller;
 
+import org.apache.commons.lang3.StringUtils;
+
+import cn.qs.utils.file.PropertiesFileUtils;
+
 /**
  * 所以控制层的基类
  * 
@@ -7,6 +11,9 @@ package cn.qs.controller;
  *
  */
 public abstract class AbstractController {
+
+	protected String productName = StringUtils
+			.defaultIfBlank(PropertiesFileUtils.getPropertyValue("settings.properties", "productName"), "管理网");
 
 	/**
 	 * 生成带basePath的页面路径

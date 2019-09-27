@@ -1,5 +1,6 @@
 package cn.qs.controller.system;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.qs.bean.user.User;
+import cn.qs.controller.AbstractController;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.JSONResultUtil;
 
@@ -18,7 +20,7 @@ import cn.qs.utils.JSONResultUtil;
  *
  */
 @Controller
-public class LoginController {
+public class LoginController extends AbstractController {
 	@Autowired
 	private UserService userService;
 
@@ -28,7 +30,8 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("login")
-	public String login() {
+	public String login(HttpServletRequest request) {
+		request.setAttribute("productName", productName);
 		return "login";
 	}
 
@@ -51,5 +54,11 @@ public class LoginController {
 
 		session.setAttribute("user", loginUser);
 		return JSONResultUtil.ok();
+	}
+
+	@Override
+	public String getViewBasePath() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
