@@ -22,6 +22,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.qs.bean.user.User;
+import cn.qs.controller.AbstractController;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.DefaultValue;
 import cn.qs.utils.JSONResultUtil;
@@ -29,7 +30,7 @@ import cn.qs.utils.MD5Utils;
 
 @Controller
 @RequestMapping("user")
-public class UserController {
+public class UserController extends AbstractController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -38,7 +39,7 @@ public class UserController {
 
 	@RequestMapping("/user-list")
 	public String member_list() {
-		return "user/user-list";
+		return getViewPath("user-list");
 	}
 
 	@RequestMapping("/user-add")
@@ -49,7 +50,7 @@ public class UserController {
 			map.put("userType", "1");
 		}
 
-		return "user/user-add";
+		return getViewPath("user-add");
 	}
 
 	@RequestMapping("addUser")
@@ -67,7 +68,7 @@ public class UserController {
 		user.setCreatetime(new Date());
 		user.setPassword(MD5Utils.md5(user.getPassword()));// md5加密密码
 		logger.info("user -> {}", user);
-		userService.addUser(user);
+		userService.add(user);
 		return JSONResultUtil.ok();
 	}
 
@@ -87,7 +88,7 @@ public class UserController {
 		PageHelper.startPage(pageNum, pageSize);
 		List<User> users = new ArrayList<User>();
 		try {
-			users = userService.getUsers(condition);
+			users = userService.listByCondition(condition);
 		} catch (Exception e) {
 			logger.error("getUsers error！", e);
 		}
@@ -99,7 +100,7 @@ public class UserController {
 	@RequestMapping("deleteUser")
 	@ResponseBody
 	public JSONResultUtil deleteUser(int id) {
-		userService.deleteUser(id);
+		userService.delete(id);
 		return JSONResultUtil.ok();
 	}
 
@@ -110,16 +111,22 @@ public class UserController {
 			id = user.getId();
 		}
 
-		User user = userService.getUser(id);
+		User user = userService.findById(id);
 		map.addAttribute("user", user);
-		return "user/updateUser";
+
+		return getViewPath("updateUser");
 	}
 
 	@RequestMapping("doUpdateUser")
 	@ResponseBody
 	public JSONResultUtil doUpdateUser(User user) {
 		logger.info("user -> {}", user);
-		userService.updateUser(user);
+		userService.update(user);
 		return JSONResultUtil.ok();
+	}
+
+	@Override
+	public String getViewBasePath() {
+		return "user";
 	}
 }

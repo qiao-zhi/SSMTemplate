@@ -30,6 +30,10 @@ import org.slf4j.LoggerFactory;
 
 public class ExcelExporter {
 
+	public static enum OfficeVersion {
+		OFFICE_03, OFFICE_07;
+	}
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExcelExporter.class);
 
 	private String[] headerNames;
@@ -174,26 +178,30 @@ public class ExcelExporter {
 		}
 	}
 
+	/**
+	 * 将数据写出到excel中
+	 * 
+	 * @param outputFilePath
+	 */
+	public void exportExcel(String outputFilePath) {
+		// 导出之前先自动设置列宽
+		this.autoAllSizeColumn();
+		FileOutputStream outputStream = null;
+		try {
+			outputStream = new FileOutputStream(outputFilePath);
+			workBook.write(outputStream);
+		} catch (IOException e) {
+			LOGGER.error(" exportExcel error", e);
+		} finally {
+			IOUtils.closeQuietly(outputStream);
+		}
+	}
+
 	public static void main(String[] args) {
 		test2();
 	}
 
-	public static void test1() {
-		ExcelExporter hssfWorkExcel = new ExcelExporter(new String[] { "姓名", "年龄" }, "人员基本信息", OfficeVersion.OFFICE_03);
-		for (int i = 0; i < 10; i++) {
-			List<String> data = new ArrayList<>();
-			data.add("namesssssssssssssss水水水水水水水水水水水水水水水水水水水ssssssssssssssss" + i);
-			data.add("" + (i + 20));
-			hssfWorkExcel.createTableRow(data, i + 1);
-		}
-		try {
-			hssfWorkExcel.exportExcel(new FileOutputStream(new File("e:/test.xls")));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void test2() {
+	private static void test2() {
 		ExcelExporter hssfWorkExcel = new ExcelExporter(new String[] { "姓名", "年龄" }, "人员基本信息", OfficeVersion.OFFICE_03);
 		List<Map<String, Object>> datas = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
@@ -208,9 +216,5 @@ public class ExcelExporter {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static enum OfficeVersion {
-		OFFICE_03, OFFICE_07;
 	}
 }

@@ -7,6 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,12 +32,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void addUser(User user) {
+	public void add(User user) {
 		userMapper.insert(user);
 	}
 
 	@Override
-	public List<User> getUsers(Map condition) {
+	public List<User> listByCondition(Map condition) {
 		UserExample userExample = new UserExample();
 		if (StringUtils.isNotBlank(MapUtils.getString(condition, "username"))) {
 			Criteria createCriteria = userExample.createCriteria();
@@ -47,17 +48,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(int id) {
+	public void delete(Integer id) {
 		userMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public User getUser(int id) {
+	public User findById(Integer id) {
 		return userMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public void updateUser(User user) {
+	public void update(User user) {
 		if (StringUtils.isNotBlank(user.getPassword())) {
 			user.setPassword(MD5Utils.md5(user.getPassword()));
 		} else {
@@ -94,5 +95,10 @@ public class UserServiceImpl implements UserService {
 		}
 
 		return users.get(0);
+	}
+
+	@Override
+	public Page<User> pageByCondition(Map condition) {
+		return null;
 	}
 }

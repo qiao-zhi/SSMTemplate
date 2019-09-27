@@ -2,7 +2,7 @@ package cn.qs.utils;
 
 import java.util.UUID;
 
-public class UUIDUtil {
+public class UUIDUtils {
 	/**
 	 * 带-的UUID
 	 * 

@@ -1,4 +1,4 @@
-package cn.qs.utils;
+package cn.qs.utils.file;
 
 import java.io.File;
 import java.util.Locale;

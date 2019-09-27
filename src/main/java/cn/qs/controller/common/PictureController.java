@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.qs.bean.common.Picture;
 import cn.qs.service.common.PictureService;
-import cn.qs.utils.FileHandleUtil;
-import cn.qs.utils.UUIDUtil;
+import cn.qs.utils.UUIDUtils;
+import cn.qs.utils.file.FileHandleUtil;
 
 @Controller
 @RequestMapping("blogPicture")
@@ -79,7 +79,7 @@ public class PictureController {
 		logger.debug("file -> {},viewId ->{}", imgFile.getOriginalFilename());
 
 		String fileOriName = imgFile.getOriginalFilename();// 获取原名称
-		String fileNowName = UUIDUtil.getUUID2() + "." + FilenameUtils.getExtension(fileOriName);// 生成唯一的名字
+		String fileNowName = UUIDUtils.getUUID2() + "." + FilenameUtils.getExtension(fileOriName);// 生成唯一的名字
 		try {
 			FileHandleUtil.uploadSpringMVCFile(imgFile, fileNowName);
 
@@ -88,7 +88,7 @@ public class PictureController {
 			return result;
 		}
 
-		String id = UUIDUtil.getUUID();
+		String id = UUIDUtils.getUUID();
 		Picture picture = new Picture();
 		picture.setCreatetime(new Date());
 		picture.setPath(fileNowName);

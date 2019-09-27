@@ -42,7 +42,7 @@ public class MessageController {
 	public JSONResultUtil doAddMessage(Message message, HttpServletRequest request) {
 		message.setCreatetime(new Date());
 
-		messageService.insert(message);
+		messageService.add(message);
 		return JSONResultUtil.ok();
 	}
 
@@ -69,7 +69,7 @@ public class MessageController {
 		Page<Message> messages = null;
 		// 开始分页
 		try {
-			messages = messageService.getMessageServicePage(condition);
+			messages = messageService.pageByCondition(condition);
 		} catch (Exception e) {
 			logger.error("getUsers error！", e);
 		}
@@ -79,7 +79,7 @@ public class MessageController {
 
 	@RequestMapping("/getMessagedetail/{messageId}")
 	public String getMessagedetail(ModelMap map, @PathVariable() Integer messageId, HttpServletRequest request) {
-		Message message = messageService.getMessageDetail(messageId);
+		Message message = messageService.findById(messageId);
 		map.put("message", message);
 
 		return "message/messageDetail";
@@ -88,13 +88,13 @@ public class MessageController {
 	@RequestMapping("deleteMessage")
 	@ResponseBody
 	public JSONResultUtil deleteMessage(int id) {
-		messageService.deleteMessage(id);
+		messageService.delete(id);
 		return JSONResultUtil.ok();
 	}
 
 	@RequestMapping("updateMessage")
 	public String updateMessage(Integer id, ModelMap map, HttpServletRequest request) {
-		Message message = messageService.getMessageDetail(id);
+		Message message = messageService.findById(id);
 		map.addAttribute("message", message);
 		return "message/updateMessage";
 	}
@@ -103,7 +103,7 @@ public class MessageController {
 	@ResponseBody
 	public JSONResultUtil doUpdateMessage(Message message) {
 		logger.info("user -> {}", message);
-		messageService.updateMessage(message);
+		messageService.update(message);
 		return JSONResultUtil.ok();
 	}
 }
