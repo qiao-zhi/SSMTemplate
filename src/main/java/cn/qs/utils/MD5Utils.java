@@ -10,7 +10,7 @@ public class MD5Utils {
 	}
 
 	public static String md5(String source) {
-		return md5(source);
+		return md5(source, "");
 	}
 
 	/**
