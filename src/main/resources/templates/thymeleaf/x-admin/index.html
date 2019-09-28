@@ -17,12 +17,12 @@
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/js/xadmin.js'}"></script>
     
     <!--自己写的JS  -->
-    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/index.js'}"></script>
-    <span th:if="${session.user.roles} eq '1'">
+    <span  th:if="${session.user.roles} eq '系统管理员'">
     	<script>
     		var admin = true;
     	</script>
     </span>
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/index.js'}"></script>
 </head>
 <body>
     <!-- 顶部开始 -->
@@ -38,7 +38,7 @@
              <!--  <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
               <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd> -->
               <dd><a href="/logout.html"  th:href="${#httpServletRequest.getContextPath()+'/logout.html'}">退出</a></dd>
-              <dd th:if="${session.user.username} ne 'admin'"><a href="javascript:void(0)"  onclick="updateUser();">个人信息</a></dd>
+              <dd><a href="javascript:void(0)"  onclick="updateUser();">个人信息</a></dd>
             </dl>
           </li>
           <!-- <li class="layui-nav-item to-index"><a href="/preIndex.html">前台首页</a></li> -->
@@ -52,7 +52,7 @@
       <div id="side-nav">
         <ul id="nav">
         
-            <li th:if="${session.user.roles} eq '1'">
+            <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe6b8;</i>
                     <cite>用户管理</cite>
@@ -76,7 +76,7 @@
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
-                    <li>
+                    <li th:if="${session.user.roles} eq '系统管理员'">
                         <a _href="/message/addMessage.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>录入信息</cite>

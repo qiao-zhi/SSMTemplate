@@ -24,7 +24,6 @@
   <body>
     <div class="x-body layui-anim layui-anim-up">
         <form class="layui-form">
-        	<input type="hidden" name="roles" th:value="${userType}"/>
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>用户全名
@@ -83,6 +82,17 @@
 		      <input type="radio" name="sex" value="女" title="女" checked="checked"/>
 		    </div>
 		  </div>
+		  
+          <div class="layui-form-item" th:if="${from} == 'admin'">
+              <label for="L_username" class="layui-form-label">
+                  	角色
+              </label>
+             <div class="layui-input-block">
+		      <input type="radio" name="roles" value="系统管理员" title="系统管理员" />
+		      <input type="radio" name="roles" value="普通用户" title="普通用户" checked="checked"/>
+		     </div>
+          </div>
+          
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>

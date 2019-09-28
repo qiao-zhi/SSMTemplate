@@ -25,7 +25,7 @@ function showTable(pageInfo) {
             +'<td>'+replaceNull(users[i].name)+'</td>'
             +'<td>'+replaceNull(users[i].createtime)+'</td>'
             +'<td>';
-	        if("undefined" != typeof admin){
+	        if(isAdmin()){
 	        	tr+='<a href=javascript:void(0) title="修改" onclick="update('+users[i].id+', 800, 400)"><i class="layui-icon">&#xe642;</i></a>'
 	        		+'<a href=javascript:void(0) title="删除" onclick="remove('+users[i].id+')"><i class="layui-icon">&#xe640;</i></a>'
 	        }

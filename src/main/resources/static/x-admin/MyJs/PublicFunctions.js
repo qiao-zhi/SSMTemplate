@@ -3,6 +3,17 @@
  */
 
 /**
+ * 判断是否是系统管理员角色
+ */
+function isAdmin() {
+	if (typeof admin != "undefined") {
+		return true;
+	} 
+
+	return false;
+}
+
+/**
  * 一个值如果是null或者''返回-
  * 
  * @param value

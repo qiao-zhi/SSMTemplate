@@ -44,10 +44,8 @@ public class UserController extends AbstractController {
 
 	@RequestMapping("/user-add")
 	public String member_add(String from, ModelMap map) {
-		if ("register".equals(from)) {
-			map.put("userType", "2");
-		} else {
-			map.put("userType", "1");
+		if (StringUtils.isNotBlank(from)) {
+			map.addAttribute("from", from);
 		}
 
 		return getViewPath("user-add");
@@ -67,6 +65,10 @@ public class UserController extends AbstractController {
 
 		user.setCreatetime(new Date());
 		user.setPassword(MD5Utils.md5(user.getPassword()));// md5加密密码
+		if (StringUtils.isBlank(user.getRoles())) {
+			user.setRoles("普通用户");
+		}
+
 		logger.info("user -> {}", user);
 		userService.add(user);
 		return JSONResultUtil.ok();
@@ -109,6 +111,8 @@ public class UserController extends AbstractController {
 		if ("personal".equals(from)) {
 			User user = (User) request.getSession().getAttribute("user");
 			id = user.getId();
+		} else {
+			map.addAttribute("from", "admin");
 		}
 
 		User user = userService.findById(id);

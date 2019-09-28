@@ -82,6 +82,19 @@
 		      <input type="radio" name="sex" value="女" title="女" th:checked="${user.sex eq '女'}"/>
 		    </div>
 		  </div>
+		  
+		  <div class="layui-form-item" th:if="${from} == 'admin'">
+              <label for="L_username" class="layui-form-label">
+                  	角色
+              </label>
+             <div class="layui-input-block">
+		      <input type="radio" name="roles" value="系统管理员" title="系统管理员" 
+		      	th:checked="${user.roles eq '系统管理员'}"/>
+		      	
+		      <input type="radio" name="roles" value="普通用户" title="普通用户"
+		      	th:checked="${user.roles eq '普通用户'}"/>
+		     </div>
+          </div>
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>

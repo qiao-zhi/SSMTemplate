@@ -19,7 +19,7 @@
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/PublicFunctions.js'}"></script>
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/message_list.js'}"></script>
     
-    <span th:if="${session.user.roles} eq '1'">
+    <span th:if="${session.user.roles} eq '系统管理员'">
     	<script>
     		var admin = true;
     	</script>
