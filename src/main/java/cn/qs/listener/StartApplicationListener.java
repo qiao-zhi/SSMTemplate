@@ -1,5 +1,7 @@
 package cn.qs.listener;
 
+import java.util.Date;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -44,6 +46,8 @@ public class StartApplicationListener implements ServletContextListener {
 					user.setPassword(adminPassword);
 					user.setUsername(adminUserName);
 					user.setFullname("系统管理员");
+					user.setCreatetime(new Date());
+					user.setRoles("系统管理员");
 
 					userService.add(user);
 					LOGGER.info("系统管理员创建成功");
