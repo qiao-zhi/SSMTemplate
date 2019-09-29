@@ -1,6 +1,7 @@
 package cn.qs.utils;
 
 import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
@@ -161,5 +162,35 @@ public class BeanUtils {
 
 	public static <T> void copyProperties(T dest, T origin) {
 		copyProperties(dest, origin, false, null);
+	}
+
+	public static <T> Object getProperty(T object, String proeprty) {
+		// 获取javaBean的BeanInfo对象
+		BeanInfo beanInfo;
+		try {
+			beanInfo = Introspector.getBeanInfo(object.getClass(), Object.class);
+		} catch (IntrospectionException ignore) {
+			return new Object();
+		}
+
+		// 获取属性描述器
+		PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+		for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+			// 获取属性名
+			String key = propertyDescriptor.getName();
+			if (proeprty.equals(key)) {
+				// 获取该属性的值
+				Method readMethod = propertyDescriptor.getReadMethod();
+				// 通过反射来调用javaBean定义的getName()方法
+				try {
+					Object value = readMethod.invoke(object);
+					return value;
+				} catch (Exception ignore) {
+					return new Object();
+				}
+			}
+		}
+
+		return new Object();
 	}
 }

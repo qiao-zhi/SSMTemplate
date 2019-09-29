@@ -1,9 +1,8 @@
 package cn.qs.mapper.common;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import cn.qs.bean.common.Message;
+import cn.qs.mapper.BaseCRUDMapper;
 
-public interface MessageMapper extends JpaRepository<Message, Integer> {
+public interface MessageMapper extends BaseCRUDMapper<Message, Integer> {
 
 }

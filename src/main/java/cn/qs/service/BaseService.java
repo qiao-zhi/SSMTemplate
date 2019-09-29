@@ -1,5 +1,6 @@
 package cn.qs.service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import org.springframework.data.domain.Page;
  * @param <E>
  *            ID类型
  */
-public interface BaseService<T, E> {
+public interface BaseService<T, E extends Serializable> {
 
 	void add(T t);
 
