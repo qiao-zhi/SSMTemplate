@@ -3,16 +3,12 @@ package cn.qs.bean.common;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import cn.qs.bean.AbstractSequenceEntity;
 
 //公共信息表
 @Entity
-public class Message {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+public class Message extends AbstractSequenceEntity {
 
 	private String name;
 

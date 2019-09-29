@@ -63,7 +63,6 @@ public class UserController extends AbstractController {
 			return JSONResultUtil.error("用户已经存在");
 		}
 
-		user.setCreatetime(new Date());
 		user.setPassword(MD5Utils.md5(user.getPassword()));// md5加密密码
 		if (StringUtils.isBlank(user.getRoles())) {
 			user.setRoles("普通用户");

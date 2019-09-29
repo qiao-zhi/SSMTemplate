@@ -28,7 +28,7 @@ function showTable(pageInfo){
         
         if (isAdmin()) {
         	tr+='<a href=javascript:void(0) title="点击修改用户" onclick="update('+users[i].id+')"><i class="layui-icon">&#xe642;</i></a>'
-        	+'<a href=javascript:void(0) title="点击删除该用户" onclick="removes('+users[i].id+')"><i class="layui-icon">&#xe640;</i></a>';
+        	+'<a href=javascript:void(0) title="点击删除该用户" onclick="remove('+users[i].id+')"><i class="layui-icon">&#xe640;</i></a>';
         } else {
         	tr += "-";
         }

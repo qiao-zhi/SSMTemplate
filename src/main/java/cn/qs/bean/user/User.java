@@ -3,15 +3,11 @@ package cn.qs.bean.user;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import cn.qs.bean.AbstractSequenceEntity;
 
 @Entity
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+public class User extends AbstractSequenceEntity {
 
 	private String username;
 
@@ -25,21 +21,11 @@ public class User {
 
 	private String email;
 
-	private Date createtime;
-
 	private Date updatetime;
 
 	private String roles;
 
 	private String userblank;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getUsername() {
 		return username;
@@ -87,14 +73,6 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email == null ? null : email.trim();
-	}
-
-	public Date getCreatetime() {
-		return createtime;
-	}
-
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
 	}
 
 	public Date getUpdatetime() {
