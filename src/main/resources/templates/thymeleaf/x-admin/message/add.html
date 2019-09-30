@@ -91,7 +91,7 @@
         			 "content":editor.html()
         	  }
        	    //异步提交数据
-         	    $.post("/message/doAdd.html",data,function(response){
+         	    $.post("./doAdd.html",data,function(response){
        	    	if(response.success == true){
        	    	  layer.msg("增加成功", {icon: 6},function () {
        	    		closeNowPage();

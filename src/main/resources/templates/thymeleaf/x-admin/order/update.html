@@ -97,7 +97,7 @@
           //监听提交
           form.on('submit(add)', function(data){
        	    //异步提交数据
-       	    $.post("/order/doUpdate.html",data.field,function(response){
+       	    $.post("./doUpdate.html",data.field,function(response){
        	    	if(response.success == true){
        	    	  layer.msg("修改成功", {icon: 6},function () {
                       // 获得frame索引
