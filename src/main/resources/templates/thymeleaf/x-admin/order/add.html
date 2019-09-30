@@ -14,102 +14,66 @@
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/js/jquery.min.js'}"></script>
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/lib/layui/layui.js'}" charset="utf-8"></script>
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/js/xadmin.js'}"></script>
-    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   
   <body>
     <div class="x-body layui-anim layui-anim-up">
         <form class="layui-form">
-        
-       	  <input type="hidden" th:field="${user.id}"/>
-       	  
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>用户全名
+                  <span class="x-red">*</span>出货单位
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_userfullname" name="fullname" lay-verify="required"
-                  autocomplete="off" class="layui-input" th:value="${user.fullname}"/>
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_username" class="layui-form-label">
-                  <span class="x-red">*username</span>
-              </label>
-              <div class="layui-input-inline">
-                  <input type="text" id="L_username" name="username" readonly="readonly" required="" lay-verify="required"
-                  autocomplete="off" class="layui-input" th:value="${user.username}"/>
-              </div>
-              <div class="layui-form-mid layui-word-aux">
-                  <span class="x-red">*</span>您唯一的登入名
-              </div>
-          </div>
-          <div class="layui-form-item">
-              <label for="L_username" class="layui-form-label">
-                  <span class="x-red"></span>password
-              </label>
-              <div class="layui-input-inline">
-                  <input type="password" id="L_password" name="password" required=""
+                  <input type="text" id="L_name" name="shippingUnit" lay-verify="required"
                   autocomplete="off" class="layui-input"/>
               </div>
           </div>
+          
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red"></span>电话
+                  <span class="x-red">*</span>购货单位
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_phone" name="phone" lay-verify="required"
-                  autocomplete="off" class="layui-input" th:value="${user.phone}"/>
+                  <input type="text" name="purchaseUnit" autocomplete="off" class="layui-input"/>
               </div>
           </div>
+          
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
-                  <span class="x-red"></span>邮箱
+                  <span class="x-red">*</span>交易时间
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_phone" name="email" lay-verify="required"
-                  autocomplete="off" class="layui-input" th:value="${user.email}"/>
+                  <input type="text" name="tradeTime"  autocomplete="off" class="layui-input"/>
               </div>
           </div>
+          
           <div class="layui-form-item">
-		    <label class="layui-form-label">性别</label>
-		    <div class="layui-input-block">
-		      <input type="radio" name="sex" value="男" title="男" th:checked="${user.sex eq '男'}"/>
-		      <input type="radio" name="sex" value="女" title="女" th:checked="${user.sex eq '女'}"/>
-		    </div>
-		  </div>
-		  
-		  <div class="layui-form-item" th:if="${from} == 'admin'">
-              <label for="L_username" class="layui-form-label">
-                  	角色
+              <label for="L_email" class="layui-form-label">
+                  <span class="x-red">*</span>交易地址
               </label>
-             <div class="layui-input-block">
-		      <input type="radio" name="roles" value="系统管理员" title="系统管理员" 
-		      	th:checked="${user.roles eq '系统管理员'}"/>
-		      	
-		      <input type="radio" name="roles" value="普通用户" title="普通用户"
-		      	th:checked="${user.roles eq '普通用户'}"/>
-		     </div>
+              <div class="layui-input-inline">
+                  <input type="text" name="tradeAddress"  autocomplete="off" class="layui-input"/>
+              </div>
           </div>
+          
+          <div class="layui-form-item">
+              <label for="L_email" class="layui-form-label">
+                  <span class="x-red">*</span>订单数量
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" name="orderNumbers"  autocomplete="off" class="layui-input"/>
+              </div>
+          </div>
+          
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
               <button  class="layui-btn" lay-filter="add" lay-submit="">
-                  修改
+                  增加
               </button>
           </div>
       </form>
     </div>
-    
-    <!--JS 定义的上下文 -->
-    <script th:inline="javascript">     
-        var contextPath= [[@{/}]];      
-	</script>
-	
     <script>
         layui.use(['form','layer'], function(){
             $ = layui.jquery;
@@ -119,9 +83,9 @@
           //监听提交
           form.on('submit(add)', function(data){
        	    //异步提交数据
-       	    $.post("./doUpdate.html",data.field,function(response){
+       	    $.post("/order/doAdd.html",data.field,function(response){
        	    	if(response.success == true){
-       	    	  layer.msg("修改成功", {icon: 6},function () {
+       	    	  layer.msg("增加成功", {icon: 6},function () {
                       // 获得frame索引
                       var index = parent.layer.getFrameIndex(window.name);
                       //关闭当前frame

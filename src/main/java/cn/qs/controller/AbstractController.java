@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 
 import cn.qs.service.BaseService;
@@ -101,7 +102,8 @@ public abstract class AbstractController<T, E extends Serializable> {
 		} catch (Exception e) {
 			LOGGER.error("SpringDataJPA page error, viewbasePath : {}", getViewBasePath(), e);
 		}
-
+		
+		System.out.println(JSONObject.toJSONString(pages));
 		return pages;
 	}
 

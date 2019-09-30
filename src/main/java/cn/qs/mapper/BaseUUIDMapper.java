@@ -11,6 +11,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @param <E>
  */
 @NoRepositoryBean
-public interface BaseUUIDMapper<T> extends BaseMapper<T, String> {
 
+public interface BaseUUIDMapper<T> extends BaseMapper<T, String> {
 }

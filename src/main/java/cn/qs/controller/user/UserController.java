@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,8 @@ import cn.qs.controller.AbstractSequenceController;
 import cn.qs.service.BaseService;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.DefaultValue;
+import cn.qs.utils.JSONResultUtil;
+import cn.qs.utils.MD5Utils;
 
 @Controller
 @RequestMapping("user")
@@ -36,6 +39,52 @@ public class UserController extends AbstractSequenceController<User> {
 
 	public String getViewBasePath() {
 		return "user";
+	}
+
+	@RequestMapping("/addUser")
+	public String add(String from, ModelMap map) {
+		if (StringUtils.isNotBlank(from)) {
+			map.addAttribute("from", from);
+		}
+
+		return getViewPath("add");
+	}
+
+	@RequestMapping("updateUser")
+	public String updateUser(Integer id, String from, ModelMap map, HttpServletRequest request) {
+		if ("personal".equals(from)) {
+			User user = (User) request.getSession().getAttribute("user");
+			id = user.getId();
+		} else {
+			map.addAttribute("from", "admin");
+		}
+
+		User user = userService.findById(id);
+		map.addAttribute("user", user);
+
+		return getViewPath("update");
+	}
+
+	@RequestMapping("doAddUser")
+	@ResponseBody
+	@Override
+	public JSONResultUtil doAdd(User user, HttpServletRequest request) {
+		if (user != null && "admin".equals(user.getUsername())) {
+			return JSONResultUtil.error("您不能添加管理员用户");
+		}
+
+		User findUser = userService.findUserByUsername(user.getUsername());
+		if (findUser != null) {
+			return JSONResultUtil.error("用户已经存在");
+		}
+
+		user.setPassword(MD5Utils.md5(user.getPassword()));// md5加密密码
+		if (StringUtils.isBlank(user.getRoles())) {
+			user.setRoles("普通用户");
+		}
+
+		userService.add(user);
+		return JSONResultUtil.ok();
 	}
 
 	/**
