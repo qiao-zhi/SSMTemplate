@@ -7,13 +7,20 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import cn.qs.bean.user.User;
 import cn.qs.utils.UUIDUtils;
+import cn.qs.utils.file.PropertiesFileUtils;
 
 public class SystemUtils {
 	private SystemUtils() {
+	}
+
+	public static String getProductName() {
+		return StringUtils.defaultIfBlank(PropertiesFileUtils.getPropertyValue("settings.properties", "productName"),
+				"管理网");
 	}
 
 	public static User getLoginUser(HttpServletRequest request) {

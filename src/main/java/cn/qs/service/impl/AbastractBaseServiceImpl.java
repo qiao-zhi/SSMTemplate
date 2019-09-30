@@ -1,4 +1,4 @@
-package cn.qs.service;
+package cn.qs.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,7 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QPageRequest;
 
-import cn.qs.mapper.BaseCRUDMapper;
+import cn.qs.mapper.BaseMapper;
+import cn.qs.service.BaseService;
 import cn.qs.utils.BeanUtils;
 
 /**
@@ -27,35 +28,35 @@ public abstract class AbastractBaseServiceImpl<T, E extends Serializable> implem
 	 * 
 	 * @return
 	 */
-	public abstract BaseCRUDMapper<T, E> getBaseCRUDMapper();
+	public abstract BaseMapper<T, E> getBaseMapper();
 
 	@Override
 	public void add(T t) {
-		getBaseCRUDMapper().save(t);
+		getBaseMapper().save(t);
 	}
 
 	@Override
 	public void delete(E id) {
-		getBaseCRUDMapper().delete(id);
+		getBaseMapper().delete(id);
 	}
 
 	@Override
 	public void update(T t) {
 		// 根据ID查询
 		Object propertyValue = BeanUtils.getProperty(t, "id");
-		T systemBean = getBaseCRUDMapper().findOne((E) propertyValue);
+		T systemBean = getBaseMapper().findOne((E) propertyValue);
 		if (systemBean != null) {
 			BeanUtils.copyProperties(systemBean, t);
 		} else {
 			return;
 		}
 
-		getBaseCRUDMapper().save(systemBean);
+		getBaseMapper().save(systemBean);
 	}
 
 	@Override
 	public T findById(E id) {
-		return getBaseCRUDMapper().findOne(id);
+		return getBaseMapper().findOne(id);
 	}
 
 	/**
@@ -73,7 +74,7 @@ public abstract class AbastractBaseServiceImpl<T, E extends Serializable> implem
 		int pageSize = MapUtils.getInteger(condition, "pageSize", 0);
 		Pageable pageRequest = new QPageRequest(pageNum, pageSize);
 
-		Page<T> page = getBaseCRUDMapper().findAll(pageRequest);
+		Page<T> page = getBaseMapper().findAll(pageRequest);
 		return page;
 	}
 

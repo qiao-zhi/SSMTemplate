@@ -1,4 +1,6 @@
-package cn.qs.service;
+package cn.qs.service.impl;
+
+import cn.qs.service.BaseService;
 
 /**
  * 提供一个默认的实现

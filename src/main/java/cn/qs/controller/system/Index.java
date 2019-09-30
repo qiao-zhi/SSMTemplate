@@ -6,14 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.qs.controller.AbstractController;
+import cn.qs.utils.system.SystemUtils;
 
 @Controller
-public class Index extends AbstractController {
+public class Index {
 
 	@RequestMapping("/index")
 	public String index(ModelMap map, HttpServletRequest request) {
-		request.setAttribute("productName", productName);
+		request.setAttribute("productName", SystemUtils.getProductName());
 		return "index";
 	}
 
@@ -22,8 +22,4 @@ public class Index extends AbstractController {
 		return "welcome";
 	}
 
-	@Override
-	public String getViewBasePath() {
-		return null;
-	}
 }

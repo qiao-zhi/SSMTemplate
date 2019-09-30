@@ -1,8 +1,5 @@
 package cn.qs.mapper;
 
-import java.io.Serializable;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**
@@ -14,6 +11,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @param <E>
  */
 @NoRepositoryBean
-public interface BaseCRUDMapper<T, E extends Serializable> extends JpaRepository<T, E> {
+public interface BaseUUIDMapper<T> extends BaseMapper<T, String> {
 
 }

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.qs.bean.user.User;
-import cn.qs.controller.AbstractController;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.JSONResultUtil;
+import cn.qs.utils.system.SystemUtils;
 
 /**
  * 登陆
@@ -20,7 +20,8 @@ import cn.qs.utils.JSONResultUtil;
  *
  */
 @Controller
-public class LoginController extends AbstractController {
+public class LoginController {
+
 	@Autowired
 	private UserService userService;
 
@@ -31,7 +32,7 @@ public class LoginController extends AbstractController {
 	 */
 	@RequestMapping("login")
 	public String login(HttpServletRequest request) {
-		request.setAttribute("productName", productName);
+		request.setAttribute("productName", SystemUtils.getProductName());
 		return "login";
 	}
 
@@ -56,9 +57,4 @@ public class LoginController extends AbstractController {
 		return JSONResultUtil.ok();
 	}
 
-	@Override
-	public String getViewBasePath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -1,19 +1,17 @@
 package cn.qs.controller.user;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,60 +20,34 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import cn.qs.bean.user.User;
-import cn.qs.controller.AbstractController;
+import cn.qs.controller.AbstractSequenceController;
+import cn.qs.service.BaseService;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.DefaultValue;
-import cn.qs.utils.JSONResultUtil;
-import cn.qs.utils.MD5Utils;
 
 @Controller
 @RequestMapping("user")
-public class UserController extends AbstractController {
+public class UserController extends AbstractSequenceController<User> {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping("/user-list")
-	public String member_list() {
-		return getViewPath("user-list");
+	public String getViewBasePath() {
+		return "user";
 	}
 
-	@RequestMapping("/user-add")
-	public String member_add(String from, ModelMap map) {
-		if (StringUtils.isNotBlank(from)) {
-			map.addAttribute("from", from);
-		}
-
-		return getViewPath("user-add");
-	}
-
-	@RequestMapping("addUser")
+	/**
+	 * Mybatis分页(重写方法)
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	@RequestMapping("page2")
 	@ResponseBody
-	public JSONResultUtil addUser(User user) {
-		if (user != null && "admin".equals(user.getUsername())) {
-			return JSONResultUtil.error("您不能添加管理员用户");
-		}
-
-		User findUser = userService.findUserByUsername(user.getUsername());
-		if (findUser != null) {
-			return JSONResultUtil.error("用户已经存在");
-		}
-
-		user.setPassword(MD5Utils.md5(user.getPassword()));// md5加密密码
-		if (StringUtils.isBlank(user.getRoles())) {
-			user.setRoles("普通用户");
-		}
-
-		logger.info("user -> {}", user);
-		userService.add(user);
-		return JSONResultUtil.ok();
-	}
-
-	@RequestMapping("getUsers")
-	@ResponseBody
-	public PageInfo<User> getUsers(@RequestParam Map condition) {
+	@Override
+	public PageInfo<User> page2(@RequestParam Map condition, HttpServletRequest request) {
 		int pageNum = 1;
 		if (StringUtils.isNotBlank(MapUtils.getString(condition, "pageNum"))) { // 如果不为空的话改变当前页号
 			pageNum = MapUtils.getInteger(condition, "pageNum");
@@ -91,45 +63,15 @@ public class UserController extends AbstractController {
 		try {
 			users = userService.listByCondition(condition);
 		} catch (Exception e) {
-			logger.error("getUsers error！", e);
+			LOGGER.error("getUsers error！", e);
 		}
 		PageInfo<User> pageInfo = new PageInfo<User>(users);
 
 		return pageInfo;
 	}
 
-	@RequestMapping("deleteUser")
-	@ResponseBody
-	public JSONResultUtil deleteUser(int id) {
-		userService.delete(id);
-		return JSONResultUtil.ok();
-	}
-
-	@RequestMapping("updateUser")
-	public String updateUser(Integer id, String from, ModelMap map, HttpServletRequest request) {
-		if ("personal".equals(from)) {
-			User user = (User) request.getSession().getAttribute("user");
-			id = user.getId();
-		} else {
-			map.addAttribute("from", "admin");
-		}
-
-		User user = userService.findById(id);
-		map.addAttribute("user", user);
-
-		return getViewPath("updateUser");
-	}
-
-	@RequestMapping("doUpdateUser")
-	@ResponseBody
-	public JSONResultUtil doUpdateUser(User user) {
-		logger.info("user -> {}", user);
-		userService.update(user);
-		return JSONResultUtil.ok();
-	}
-
 	@Override
-	public String getViewBasePath() {
-		return "user";
+	public BaseService<User, Integer> getBaseService() {
+		return userService;
 	}
 }
