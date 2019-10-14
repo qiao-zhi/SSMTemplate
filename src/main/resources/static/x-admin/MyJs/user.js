@@ -7,7 +7,7 @@ $(function(){
 });
 
 function showTable(pageInfo){
-    var total = pageInfo.total;//页总数
+    var total = pageInfo.total;//总数
     var pageNum = pageInfo.pageNum;//页号
     var pageSize = pageInfo.pageSize;//页大小
 

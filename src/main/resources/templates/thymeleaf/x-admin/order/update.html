@@ -51,7 +51,7 @@
                   <span class="x-red">*</span>交易时间
               </label>
               <div class="layui-input-inline">
-                  <input type="text" autocomplete="off" class="layui-input" th:field="${bean.tradeTime}"/>
+                  <input type="text" autocomplete="off" id="test1" class="layui-input" th:field="${bean.tradeTime}"/>
               </div>
           </div>
           
@@ -89,10 +89,20 @@
 	</script>
 	
     <script>
+    
+	layui.use('laydate', function() {
+		var laydate = layui.laydate;
+		//执行一个laydate实例
+		laydate.render({
+			elem : '#test1', //指定元素
+			zIndex: 99999999,
+			trigger: 'click'
+		});
+	});
+	
         layui.use(['form','layer'], function(){
-            $ = layui.jquery;
-          var form = layui.form
-          ,layer = layui.layer;
+          $ = layui.jquery;
+          var form = layui.form, layer = layui.layer;
         
           //监听提交
           form.on('submit(add)', function(data){

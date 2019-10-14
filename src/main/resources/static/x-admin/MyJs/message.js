@@ -11,7 +11,7 @@ $(function(){
  * @param pageInfo  ajax返回的参数信息
  */
 function showTable(pageInfo) {
-    var total = pageInfo.totalPages;//页总数
+    var total = pageInfo.totalElements;//总数
     var pageNum = parseFloat(pageInfo.number)+1;//页号
     var pageSize = pageInfo.size;//页大小
 

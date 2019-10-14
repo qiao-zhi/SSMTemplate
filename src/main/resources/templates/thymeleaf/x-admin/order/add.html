@@ -43,7 +43,7 @@
                   <span class="x-red">*</span>交易时间
               </label>
               <div class="layui-input-inline">
-                  <input type="text" name="tradeTime"  autocomplete="off" class="layui-input"/>
+                  <input type="text" name="tradeTime" id="test1" autocomplete="off" class="layui-input"/>
               </div>
           </div>
           
@@ -75,35 +75,48 @@
       </form>
     </div>
     <script>
-        layui.use(['form','layer'], function(){
-            $ = layui.jquery;
-          var form = layui.form
-          ,layer = layui.layer;
-        
-          //监听提交
-          form.on('submit(add)', function(data){
-       	    //异步提交数据
-       	    $.post("./doAdd.html",data.field,function(response){
-       	    	if(response.success == true){
-       	    	  layer.msg("增加成功", {icon: 6},function () {
-                      // 获得frame索引
-                      var index = parent.layer.getFrameIndex(window.name);
-                      //关闭当前frame
-                      parent.layer.close(index);
-                      // 父页面刷新
-                      parent.location.reload();
-                  });
-       	    	}else{
-       	    		layer.alert(response.msg);
-       	    	}
-       	    });
-          
-            return false;
-          });
-          
-          
-        });
-    </script>
+
+					layui.use('laydate', function() {
+						var laydate = layui.laydate;
+						//执行一个laydate实例
+						laydate.render({
+							elem : '#test1', //指定元素
+							zIndex: 99999999,
+							trigger: 'click'
+						});
+					});
+
+					layui.use([ 'form', 'layer' ], function() {
+						$ = layui.jquery;
+						var form = layui.form, layer = layui.layer;
+
+						//监听提交
+						form.on('submit(add)', function(data) {
+							//异步提交数据
+							$.post("./doAdd.html", data.field, function(
+									response) {
+								if (response.success == true) {
+									layer.msg("增加成功", {
+										icon : 6
+									}, function() {
+										// 获得frame索引
+										var index = parent.layer
+												.getFrameIndex(window.name);
+										//关闭当前frame
+										parent.layer.close(index);
+										// 父页面刷新
+										parent.location.reload();
+									});
+								} else {
+									layer.alert(response.msg);
+								}
+							});
+
+							return false;
+						});
+
+					});
+				</script>
   </body>
 
 </html>
