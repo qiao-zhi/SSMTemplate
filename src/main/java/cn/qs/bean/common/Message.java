@@ -1,7 +1,5 @@
 package cn.qs.bean.common;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 
 import cn.qs.bean.AbstractSequenceEntity;
@@ -11,10 +9,6 @@ import cn.qs.bean.AbstractSequenceEntity;
 public class Message extends AbstractSequenceEntity {
 
 	private String name;
-
-	private Date createtime;
-
-	private Date updatetime;
 
 	private String messageblank;
 
@@ -34,22 +28,6 @@ public class Message extends AbstractSequenceEntity {
 
 	public void setName(String name) {
 		this.name = name == null ? null : name.trim();
-	}
-
-	public Date getCreatetime() {
-		return createtime;
-	}
-
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
-	}
-
-	public Date getUpdatetime() {
-		return updatetime;
-	}
-
-	public void setUpdatetime(Date updatetime) {
-		this.updatetime = updatetime;
 	}
 
 	public String getMessageblank() {

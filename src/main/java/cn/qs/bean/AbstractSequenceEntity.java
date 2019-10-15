@@ -24,6 +24,11 @@ public abstract class AbstractSequenceEntity {
 
 	protected String creator;
 
+	// 三个保留字段
+	protected String remark1;
+	protected String remark2;
+	protected String remark3;
+
 	public AbstractSequenceEntity() {
 		this.createtime = new Date();
 	}
@@ -50,6 +55,30 @@ public abstract class AbstractSequenceEntity {
 
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+
+	public String getRemark1() {
+		return remark1;
+	}
+
+	public void setRemark1(String remark1) {
+		this.remark1 = remark1;
+	}
+
+	public String getRemark2() {
+		return remark2;
+	}
+
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
+	}
+
+	public String getRemark3() {
+		return remark3;
+	}
+
+	public void setRemark3(String remark3) {
+		this.remark3 = remark3;
 	}
 
 }

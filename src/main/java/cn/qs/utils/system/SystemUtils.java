@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import cn.qs.bean.user.User;
 import cn.qs.utils.UUIDUtils;
@@ -23,6 +25,13 @@ public class SystemUtils {
 				"管理网");
 	}
 
+	public static User getLoginUser() {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
+		User user = (User) request.getSession().getAttribute("user");
+		return user;
+	}
+
 	public static User getLoginUser(HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("user");
 		return user;
@@ -30,6 +39,10 @@ public class SystemUtils {
 
 	public static String getLoginUsername(HttpServletRequest request) {
 		return getLoginUser(request).getUsername();
+	}
+
+	public static String getLoginUsername() {
+		return getLoginUser().getUsername();
 	}
 
 	public static File getTmpFile() {
