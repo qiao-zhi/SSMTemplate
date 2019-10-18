@@ -2,6 +2,7 @@ package cn.qs.utils.export;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,7 +48,20 @@ public class ExcelReader {
 				throw new RuntimeException(e1);
 			}
 		}
+	}
 
+	public ExcelReader(InputStream inputStream) {
+		// 解决版本问题，HSSFWorkbook是97-03版本的xls版本，XSSFWorkbook是07版本的xlsx
+		try {
+			workBook = new XSSFWorkbook(inputStream);
+		} catch (Exception e) {
+			try {
+				workBook = new HSSFWorkbook(inputStream);
+			} catch (Exception e1) {
+				LOGGER.error("Excel格式不正确", e1);
+				throw new RuntimeException(e1);
+			}
+		}
 	}
 
 	/**
