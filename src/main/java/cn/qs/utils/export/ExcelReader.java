@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -157,7 +158,7 @@ public class ExcelReader {
 			Map<String, Object> rowMap = new LinkedHashMap<>();
 			result.add(rowMap);
 			for (int j = 0, length_1 = headers.length; j < length_1; j++) {
-				String cellValue = getCellValue(row.getCell(j));
+				String cellValue = getCellStringValue(row.getCell(j));
 				String header = headers[j];
 				rowMap.put(header, cellValue);
 			}
@@ -178,10 +179,25 @@ public class ExcelReader {
 	 */
 	private String getCellValue(Cell cell) {
 		if (cell == null) {
-			return null;
+			return "";
 		}
 
-		Object cellValue = null;
+		cell.setCellType(CellType.STRING);
+		return StringUtils.defaultIfBlank(cell.getStringCellValue(), "");
+	}
+
+	/**
+	 * POI3.15之后的读取方法(建议用这个)
+	 * 
+	 * @param cell
+	 * @return
+	 */
+	private String getCellStringValue(Cell cell) {
+		if (cell == null) {
+			return "";
+		}
+
+		String cellValue = null;
 		if (cell.getCellTypeEnum() == CellType.NUMERIC) {
 			if (HSSFDateUtil.isCellDateFormatted(cell)) {
 				cellValue = DateFormatUtils.format(cell.getDateCellValue(), "yyyy-MM-dd");
@@ -192,14 +208,14 @@ public class ExcelReader {
 		} else if (cell.getCellTypeEnum() == CellType.STRING) {
 			cellValue = cell.getStringCellValue();
 		} else if (cell.getCellTypeEnum() == CellType.BOOLEAN) {
-			cellValue = cell.getBooleanCellValue();
+			cellValue = String.valueOf(cell.getBooleanCellValue());
 		} else if (cell.getCellTypeEnum() == CellType.ERROR) {
 			cellValue = "错误类型";
 		} else {
 			cellValue = "";
 		}
 
-		return cellValue.toString();
+		return cellValue;
 	}
 
 }
