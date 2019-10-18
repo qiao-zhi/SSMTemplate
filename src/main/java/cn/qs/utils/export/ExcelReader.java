@@ -162,7 +162,6 @@ public class ExcelReader {
 				String header = headers[j];
 				rowMap.put(header, cellValue);
 			}
-
 		}
 
 		return result;
