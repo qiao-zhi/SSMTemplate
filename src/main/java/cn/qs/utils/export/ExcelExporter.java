@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
@@ -179,6 +180,23 @@ public class ExcelExporter {
 	}
 
 	/**
+	 * 合并单元格(起始行列都包括在里面)
+	 * 
+	 * @param startRow
+	 *            起始行
+	 * @param endRow
+	 *            结束行
+	 * @param startCol
+	 *            起始列
+	 * @param endCol
+	 *            结束列
+	 */
+	public void mergeCell(int startRow, int endRow, int startCol, int endCol) {
+		CellRangeAddress region = new CellRangeAddress(startRow, endRow, startCol, endCol);
+		sheet.addMergedRegion(region);
+	}
+
+	/**
 	 * 将数据写出到excel中
 	 * 
 	 * @param outputFilePath
@@ -211,8 +229,10 @@ public class ExcelExporter {
 			datas.add(data);
 		}
 		hssfWorkExcel.createTableRows(datas, new String[] { "name", "age" });
+		hssfWorkExcel.mergeCell(1, 2, 0, 1);
+
 		try {
-			hssfWorkExcel.exportExcel(new FileOutputStream(new File("e:/test1.xlsx")));
+			hssfWorkExcel.exportExcel(new FileOutputStream(new File("e:/test1.xls")));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
