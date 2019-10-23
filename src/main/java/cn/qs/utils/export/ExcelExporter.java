@@ -229,7 +229,7 @@ public class ExcelExporter {
 			datas.add(data);
 		}
 		hssfWorkExcel.createTableRows(datas, new String[] { "name", "age" });
-		hssfWorkExcel.mergeCell(1, 2, 0, 1);
+		hssfWorkExcel.mergeCell(1, 2, 0, 0);
 
 		try {
 			hssfWorkExcel.exportExcel(new FileOutputStream(new File("e:/test1.xls")));

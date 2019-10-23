@@ -217,4 +217,11 @@ public class ExcelReader {
 		return cellValue;
 	}
 
+	public static void main(String[] args) {
+		ExcelReader excelReader = new ExcelReader("e:/test1.xls");
+		System.out.println("==========读取所有sheet数据，默认以第一行作为header==========");
+		List<Map<String, Object>> readAllSheetDatas2 = excelReader.readAllSheetDatas();
+		System.out.println(readAllSheetDatas2);
+	}
+
 }
