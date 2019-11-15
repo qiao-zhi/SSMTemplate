@@ -3,7 +3,7 @@ package cn.qs.utils.securty;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
- * SHA算法Secure Hash Algorithm（安全hash算法） 安全散列算法（hash函数 将原始信息压缩
+ * 摘要算法：SHA算法Secure Hash Algorithm（安全hash算法） 安全散列算法（hash函数 将原始信息压缩
  * 返回散列值）可以是SHA-1，SHA1是目前最安全 的摘要算法 摘要的长度为 20字节
  * 
  * 其他的SHA 包括 SHA-256（32字节）

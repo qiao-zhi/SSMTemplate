@@ -1,6 +1,6 @@
 package cn.qs.utils.securty;
 
-import org.apache.xmlbeans.impl.util.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Base64就是一种基于64个可打印字符来表示二进制数据的方法。
@@ -11,12 +11,12 @@ import org.apache.xmlbeans.impl.util.Base64;
 public class Base64Utils {
 
 	public static String encode(String str) {
-		byte[] encode = Base64.encode(str.getBytes());
+		byte[] encode = Base64.encodeBase64(str.getBytes());
 		return new String(encode);
 	}
 
 	public static String decode(String str) {
-		byte[] decode = Base64.decode(str.getBytes());
+		byte[] decode = Base64.decodeBase64(str);
 		return new String(decode);
 	}
 
