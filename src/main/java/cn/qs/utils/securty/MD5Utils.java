@@ -1,4 +1,4 @@
-package cn.qs.utils;
+package cn.qs.utils.securty;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

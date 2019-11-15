@@ -1,4 +1,4 @@
-package cn.qs.utils;
+package cn.qs.utils.securty;
 
 public class CryptedUtils {
 

@@ -16,7 +16,7 @@ import cn.qs.bean.user.UserExample;
 import cn.qs.bean.user.UserExample.Criteria;
 import cn.qs.mapper.user.UserMapper;
 import cn.qs.service.user.UserService;
-import cn.qs.utils.MD5Utils;
+import cn.qs.utils.securty.MD5Utils;
 
 @Service
 @Transactional

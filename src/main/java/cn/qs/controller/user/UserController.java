@@ -26,7 +26,7 @@ import cn.qs.service.BaseService;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.DefaultValue;
 import cn.qs.utils.JSONResultUtil;
-import cn.qs.utils.MD5Utils;
+import cn.qs.utils.securty.MD5Utils;
 
 @Controller
 @RequestMapping("user")
