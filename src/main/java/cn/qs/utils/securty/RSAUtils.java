@@ -9,14 +9,17 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.crypto.Cipher;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * 非对称加密RSA算法(公钥可以在网络上传输，私钥存在自己服务器。客户端用公钥加密，服务端用私钥解密，解密之后获取自己的数据。)
  * 生成秘钥是非常耗时的，而且解密也是比较耗时的，所以对于一些不必每次都解密的请求最好的办法是一次解密多次使用
+ * 
+ * (生成的秘钥以及加密解密都是byte数组，加密的处理方法可以将byte数组转为16进制字符串、也可以对byte数组进行base64编码处理，
+ * 解密就是对应的逆向方法。下面将公钥私钥进行base64编码解码；对加密后的数据提供了转16进制与base64编码两种方式)
  * 
  * @author Administrator
  *
@@ -51,6 +54,23 @@ public class RSAUtils {
 		return new String(encode, "UTF-8");
 	}
 
+	public static String encryptAndToHexStr(String str) throws Exception {
+		return encryptAndToHexStr(str, PUBLIC_KEY);
+	}
+
+	/**
+	 * 加密之后转为hex字符串
+	 * 
+	 * @param str
+	 * @param publicKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static String encryptAndToHexStr(String str, String publicKey) throws Exception {
+		byte[] encrypt = encrypt(str.getBytes(), publicKey);
+		return Hex.encodeHexString(encrypt);
+	}
+
 	/**
 	 * 加密字节数组
 	 * 
@@ -68,14 +88,6 @@ public class RSAUtils {
 		return mw;
 	}
 
-	/**
-	 * Base64解码之后解密
-	 * 
-	 * @param str
-	 * @param publicKey
-	 * @return
-	 * @throws Exception
-	 */
 	public static String base64DecodeAndDecrypt(String str) throws Exception {
 		return base64DecodeAndDecrypt(str, PRIVATE_KEY);
 	}
@@ -91,6 +103,24 @@ public class RSAUtils {
 	public static String base64DecodeAndDecrypt(String str, String privateKey) throws Exception {
 		byte[] base64Decoded = Base64.decodeBase64(str);
 		byte[] decryptedBytes = decrypt(base64Decoded, privateKey);
+		return new String(decryptedBytes, "UTF-8");
+	}
+
+	public static String hexStrToBytesAndDecrypt(String str) throws Exception {
+		return hexStrToBytesAndDecrypt(str, PRIVATE_KEY);
+	}
+
+	/**
+	 * 将16进制的字符串转为bytes后解密
+	 * 
+	 * @param str
+	 * @param publicKey
+	 * @return
+	 * @throws Exception
+	 */
+	public static String hexStrToBytesAndDecrypt(String str, String privateKey) throws Exception {
+		byte[] bytes = Hex.decodeHex(str.toCharArray());
+		byte[] decryptedBytes = decrypt(bytes, privateKey);
 		return new String(decryptedBytes, "UTF-8");
 	}
 
@@ -200,6 +230,10 @@ public class RSAUtils {
 			String encryptAndBase64Encode = encryptAndBase64Encode("qlq");
 			System.out.println(encryptAndBase64Encode);
 			System.out.println(base64DecodeAndDecrypt(encryptAndBase64Encode));
+
+			String encryptAndToHex = encryptAndToHexStr("qlq");
+			System.out.println(encryptAndToHex);
+			System.out.println(hexStrToBytesAndDecrypt(encryptAndToHex));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
