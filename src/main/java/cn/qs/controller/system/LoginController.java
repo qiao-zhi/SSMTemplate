@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -48,6 +49,27 @@ public class LoginController {
 	@ResponseBody
 	public JSONResultUtil doLogin(String username, String password, HttpSession session) {
 		User loginUser = userService.getUserByUserNameAndPassword(username, password);
+
+		if (loginUser == null) {
+			return JSONResultUtil.error("账号或者密码错误");
+		}
+
+		session.setAttribute("user", loginUser);
+		return JSONResultUtil.ok();
+	}
+
+	/**
+	 * 处理登陆请求(JSON数据)
+	 * 
+	 * @param username
+	 * @param password
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("doLoginJSON")
+	@ResponseBody
+	public JSONResultUtil doLoginJSON(@RequestBody User user, HttpSession session) {
+		User loginUser = userService.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
 
 		if (loginUser == null) {
 			return JSONResultUtil.error("账号或者密码错误");
