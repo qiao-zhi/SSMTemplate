@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 允许跨域请求
  */
-@WebFilter(filterName = "corsFilter", urlPatterns = "/*")
+// @WebFilter(filterName = "corsFilter", urlPatterns = "/*")
 public class CorsFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {

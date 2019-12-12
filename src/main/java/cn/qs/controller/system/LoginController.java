@@ -1,8 +1,12 @@
 package cn.qs.controller.system;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +17,7 @@ import cn.qs.bean.user.User;
 import cn.qs.service.user.UserService;
 import cn.qs.utils.JSONResultUtil;
 import cn.qs.utils.system.SystemUtils;
+import cn.qs.utils.web.WebUtils;
 
 /**
  * 登陆
@@ -22,6 +27,8 @@ import cn.qs.utils.system.SystemUtils;
  */
 @Controller
 public class LoginController {
+
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private UserService userService;
@@ -68,8 +75,9 @@ public class LoginController {
 	 */
 	@RequestMapping("doLoginJSON")
 	@ResponseBody
-	public JSONResultUtil doLoginJSON(@RequestBody User user, HttpSession session) {
+	public JSONResultUtil doLoginJSON(@RequestBody User user, HttpSession session, HttpServletRequest request) {
 		User loginUser = userService.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
+		logger.debug("loginUser: {}", loginUser);
 
 		if (loginUser == null) {
 			return JSONResultUtil.error("账号或者密码错误");
