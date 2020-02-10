@@ -33,5 +33,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="E:/xiangmu/ecm2/WebContent/WEB-INF/lib/jna.jar"/>
+	<classpathentry kind="lib" path="E:/xiangmu/zdconpro/WebContent/WEB-INF/lib/jcommon-1.0.13.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
