@@ -153,6 +153,9 @@ public class BeanUtils {
 
 				// 获取setter方法修改属性
 				Method writeMethod = propertyDescriptor.getWriteMethod();
+				if (writeMethod == null) {
+					continue;
+				}
 				writeMethod.invoke(dest, srcValue);
 			}
 		} catch (Exception ignored) {
