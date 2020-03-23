@@ -5,9 +5,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//系统图片表
+//系统文档表
 @Entity
-public class Picture {
+public class Document {
 	@Id
 	private String id;
 

@@ -21,33 +21,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.qs.bean.common.Picture;
-import cn.qs.service.common.PictureService;
+import cn.qs.bean.common.Document;
+import cn.qs.service.common.DocumentService;
 import cn.qs.utils.UUIDUtils;
 import cn.qs.utils.file.FileHandleUtil;
 
 @Controller
-@RequestMapping("blogPicture")
-public class PictureController {
+@RequestMapping("R")
+public class DocumentController {
 
-	private static final Logger logger = LoggerFactory.getLogger(PictureController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
 
 	@Autowired
-	private PictureService pictureService;
+	private DocumentService documentService;
 
 	/**
-	 * Restful风格获取图片
+	 * Restful风格获取文档
 	 * 
 	 * @param request
 	 * @param response
-	 * @param pictureId
+	 * @param documentId
 	 */
-	@RequestMapping("/getPicture/{pictureId}")
-	public void getPicture(HttpServletRequest request, HttpServletResponse response, @PathVariable() String pictureId) {
+	@RequestMapping("/getDocument/{documentId}")
+	public void getPicture(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable() String documentId) {
 		FileInputStream in = null;
 		ServletOutputStream outputStream = null;
 		try {
-			String picturePath = pictureService.getPicturePathByPictureId(pictureId);
+			String picturePath = documentService.getPathById(documentId);
 			File fileByName = FileHandleUtil.getFileByName(picturePath);
 			in = new FileInputStream(fileByName);
 			outputStream = response.getOutputStream();
@@ -61,12 +62,12 @@ public class PictureController {
 	}
 
 	/**
-	 * 图片上传
+	 * 文档上传
 	 * 
 	 * @param imgFile
 	 * @return
 	 */
-	@RequestMapping("/uploadPicture")
+	@RequestMapping("/upload")
 	@ResponseBody
 	public Map<String, Object> uploadPicture(MultipartFile imgFile) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -89,16 +90,16 @@ public class PictureController {
 		}
 
 		String id = UUIDUtils.getUUID();
-		Picture picture = new Picture();
-		picture.setCreatetime(new Date());
-		picture.setPath(fileNowName);
-		picture.setId(id);
+		Document document = new Document();
+		document.setCreatetime(new Date());
+		document.setPath(fileNowName);
+		document.setId(id);
 
-		pictureService.insert(picture);
+		documentService.insert(document);
 
 		// 回传JSON结果
 		result.put("error", 0);
-		result.put("url", "/blogPicture/getPicture/" + id);
+		result.put("url", "/document/getDocument/" + id);
 		return result;
 	}
 }
