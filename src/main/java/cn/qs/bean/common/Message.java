@@ -1,5 +1,6 @@
 package cn.qs.bean.common;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import cn.qs.bean.AbstractSequenceEntity;
@@ -12,6 +13,7 @@ public class Message extends AbstractSequenceEntity {
 
 	private String messageblank;
 
+	@Column(length = 2000)
 	private String content;
 
 	public Integer getId() {
