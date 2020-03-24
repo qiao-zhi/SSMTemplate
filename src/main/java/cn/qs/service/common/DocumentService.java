@@ -6,5 +6,5 @@ public interface DocumentService {
 
 	void insert(Document document);
 
-	String getPathById(String documentId);
+	Document getById(String documentId);
 }

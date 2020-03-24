@@ -11,13 +11,25 @@ public class Document {
 	@Id
 	private String id;
 
+	/**
+	 * 原名字
+	 */
+	private String originName;
+
+	/**
+	 * 上传者
+	 */
+	private String uploaderUsername;
+
 	private String name;
 
 	private String path;
 
 	private Date createtime;
 
-	private String pictureblank;
+	private String remark1;
+
+	private String remark2;
 
 	public String getId() {
 		return id;
@@ -51,11 +63,36 @@ public class Document {
 		this.createtime = createtime;
 	}
 
-	public String getPictureblank() {
-		return pictureblank;
+	public String getRemark1() {
+		return remark1;
 	}
 
-	public void setPictureblank(String pictureblank) {
-		this.pictureblank = pictureblank == null ? null : pictureblank.trim();
+	public void setRemark1(String remark1) {
+		this.remark1 = remark1;
 	}
+
+	public String getRemark2() {
+		return remark2;
+	}
+
+	public void setRemark2(String remark2) {
+		this.remark2 = remark2;
+	}
+
+	public String getOriginName() {
+		return originName;
+	}
+
+	public void setOriginName(String originName) {
+		this.originName = originName;
+	}
+
+	public String getUploaderUsername() {
+		return uploaderUsername;
+	}
+
+	public void setUploaderUsername(String uploaderUsername) {
+		this.uploaderUsername = uploaderUsername;
+	}
+
 }

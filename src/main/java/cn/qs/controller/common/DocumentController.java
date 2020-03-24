@@ -25,9 +25,11 @@ import cn.qs.bean.common.Document;
 import cn.qs.service.common.DocumentService;
 import cn.qs.utils.UUIDUtils;
 import cn.qs.utils.file.FileHandleUtil;
+import cn.qs.utils.file.TikaUtils;
+import cn.qs.utils.system.MySystemUtils;
 
 @Controller
-@RequestMapping("R")
+@RequestMapping("document")
 public class DocumentController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DocumentController.class);
@@ -48,8 +50,19 @@ public class DocumentController {
 		FileInputStream in = null;
 		ServletOutputStream outputStream = null;
 		try {
-			String picturePath = documentService.getPathById(documentId);
-			File fileByName = FileHandleUtil.getFileByName(picturePath);
+			Document document = documentService.getById(documentId);
+			String path = document.getPath();
+			String originName = document.getOriginName();
+
+			File fileByName = FileHandleUtil.getFileByName(path);
+
+			// 判断文件类型，image、pdf返回阅读，其他下载
+			String fileType = TikaUtils.getFileType(fileByName);
+			if (!TikaUtils.TYPE_IMAGE.equals(fileType) && !TikaUtils.TYPE_PDF.equals(fileType)) {
+				response.setContentType("application/force-download");
+				response.setHeader("Content-Disposition", "attachment;fileName=" + originName);
+			}
+
 			in = new FileInputStream(fileByName);
 			outputStream = response.getOutputStream();
 			IOUtils.copyLarge(in, outputStream);
@@ -94,6 +107,8 @@ public class DocumentController {
 		document.setCreatetime(new Date());
 		document.setPath(fileNowName);
 		document.setId(id);
+		document.setOriginName(fileOriName);
+		document.setUploaderUsername(MySystemUtils.getLoginUsername());
 
 		documentService.insert(document);
 

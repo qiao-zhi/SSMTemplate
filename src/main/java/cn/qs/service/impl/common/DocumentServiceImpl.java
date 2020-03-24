@@ -21,7 +21,7 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
-	public String getPathById(String documentId) {
-		return documentMapper.findOne(documentId).getPath();
+	public Document getById(String documentId) {
+		return documentMapper.findOne(documentId);
 	}
 }
