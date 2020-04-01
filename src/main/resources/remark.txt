@@ -1,0 +1,5 @@
+1.创建数据库语句
+create database if not exists dbname default character set utf8 collate utf8_general_ci;
+
+2.创建maven项目遇到了Failed to read artifact descriptor for org.apache.maven.plugins:maven-jar-plugin:jar:2.4
+删除我自己maven库中D:\study_maven\mvn_repository\org\apache\maven\plugins下的所有文件，然后再update一下项目就ok了
