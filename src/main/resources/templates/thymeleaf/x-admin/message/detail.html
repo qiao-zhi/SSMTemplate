@@ -15,6 +15,27 @@
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/lib/layui/layui.all.js'}" charset="utf-8"></script>
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/js/xadmin.js'}"></script>
     
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/PublicFunctions.js'}"></script>
+     
+    <!-- kindeditor相关  -->
+   	<link rel="stylesheet" th:href="${#httpServletRequest.getContextPath()+'/static/kindeditor/themes/default/default.css'}" />
+   	<link rel="stylesheet" th:href="${#httpServletRequest.getContextPath()+'/static/kindeditor/plugins/code/prettify.css'}" />
+	<script charset="utf-8" th:src="${#httpServletRequest.getContextPath()+'/static/kindeditor/kindeditor-all.js'}"></script>
+	<script charset="utf-8" th:src="${#httpServletRequest.getContextPath()+'/static/kindeditor/lang/zh-CN.js'}"></script>
+   	<script>
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="contentEditor"]', {
+			resizeType : 1,
+			allowPreviewEmoticons : false,
+			uploadJson : '/document/upload.html',
+			allowImageUpload : true,
+			allowFileUpload: true,
+			pasteType : 0,      //设置能否粘贴
+			items : ['image', "insertfile", 'link','fullscreen']
+		});
+	});
+	</script>    
     <span th:if="${session.user.username} eq 'admin'">
     	<script>
     		var admin = true;
@@ -31,16 +52,90 @@
     	width: 80%;
     	background-color: #fff;
     }
+	a {
+		color: blue !important;
+		text-decoration: underline !important;
+	}    
     </style>
   </head>
   
   <body class="layui-anim layui-anim-up">
 	  <div id="container">
+	  	<div id="beanInfoDiv">
 	  	  <center>
 		  	<h1 th:text="${'标题:'+message.name}"></h1>
 		  </center>
 	  	  <hr/>
 	  	  <span th:utext="${message.content}"></span>
+  	    </div>
+  	    
+  	    <br/>
+  	    <hr/>
+  	    <br/>
+	  	  
+ 	  	<div id="instantMsgInfo">
+	  	  <h2>评论信息</h2>	  	
+		  <div>
+		  	<div th:each="instantMessage:${instantMessages}" th:id="${'instantMessage' + instantMessage.id}">
+		  		<span th:text="${'#' + ( instantMessageStat.index + 1 ) + '楼 ' + ' ' + instantMessage.createtimeStr  + ' ' + instantMessage.creator}"></span>
+		  		<span><a href="javascript:void(0)" th:onclick="'replyInstantMessage(' + ${instantMessage.id} + ',\'' + ${instantMessage.creator} + '\')'">回复</a></span>
+		  		<br/>
+		  		<span th:utext="${instantMessage.content}"></span>
+		  		<br/>
+		  		<br/>
+		  	</div>
+		  	<div th:if="${#lists.isEmpty(instantMessages)}">
+		  		暂无评论
+		  	</div>
+		  	
+			  <div style="margin-top: 20px;">
+			  	<h4>发表评论</h4>
+		  	     <form class="layui-form">
+		  	     	  <input type="hidden" name="beanId" th:value="${message.id}" id="beanId"/>
+		  	     	  <input type="hidden" name="parentMsgId" id="parentMsgId"/>
+		  	     
+			          <div class="layui-form-item">
+			              <div class="layui-input-inline">
+			              	<textarea rows="10" cols="50" name="contentEditor" id="content"></textarea>
+			              </div>
+			          </div>
+			          
+			          <div class="layui-form-item">
+			              <label for="L_repass" class="layui-form-label">
+			              </label>
+			              <button  class="layui-btn" lay-filter="add" lay-submit="">
+			              	评论
+			              </button>
+			          </div>
+			      </form>
+			  </div>		  	
+		  </div>
+	   </div>
 	  </div>
   </body>
 </html>
+      <script type="text/javascript">
+        layui.use(['form','layer'], function(){
+            $ = layui.jquery;
+          var form = layui.form
+          ,layer = layui.layer;
+        
+          //监听提交
+          form.on('submit(add)', function(data){
+       	    //异步提交数据
+       	    $.post("/instantMessage/doAdd.html",
+       	    		{"beanId": $("#beanId").val(), "parentMsgId": $("#parentMsgId").val(), "type": "message", "content": editor.html()},
+       	    		function(response){
+       	    	if(response.success == true){
+       	    	  layer.msg("增加成功", {icon: 6},function () {
+                      window.location.reload();
+                  });
+       	    	}else{
+       	    		layer.alert(response.msg);
+       	    	}
+       	    });
+          
+            return false;
+          });
+        });
+    </script>  

@@ -8,6 +8,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.hibernate.annotations.Index;
 
 import com.alibaba.fastjson.JSONObject;
@@ -111,5 +112,9 @@ public class AbstractEntity {
 
 	public Object getProperty(String key) {
 		return propertiesMap.get(key);
+	}
+
+	public String getCreatetimeStr() {
+		return DateFormatUtils.format(createtime, "yyyy-MM-dd");
 	}
 }

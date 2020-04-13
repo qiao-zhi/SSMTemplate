@@ -239,3 +239,11 @@ function update(id, width, height) {
 	x_admin_show('修改', url, width, height);
 }
 /*******************E   提取的公共分页相关函数****************************/
+
+
+var replyInstantMessage = function(id, username) {
+	$("#parentMsgId").val(id);
+	var str = "<a href='#instantMessage" + id + "' title='点击查看父评论'>@" + username + "</a><br/>";
+	editor.focus();
+	editor.html(str);
+} 
