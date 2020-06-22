@@ -47,7 +47,7 @@ public class UserController extends AbstractSequenceController<User> {
 		if (StringUtils.isNotBlank(from)) {
 			map.addAttribute("from", from);
 		}
-
+		
 		return getViewPath("add");
 	}
 
@@ -147,7 +147,7 @@ public class UserController extends AbstractSequenceController<User> {
 			LOGGER.error("getUsers error！", e);
 		}
 		PageInfo<User> pageInfo = new PageInfo<User>(users);
-
+		
 		return pageInfo;
 	}
 

@@ -11,7 +11,7 @@ public class JSONResultUtil<T> implements Serializable {
 	private T data;
 
 	private String msg;
-
+	
 	public boolean isSuccess() {
 		return success;
 	}
@@ -35,7 +35,7 @@ public class JSONResultUtil<T> implements Serializable {
 	public void setMsg(String msg) {
 		this.msg = msg;
 	}
-
+	
 	public JSONResultUtil(boolean success) {
 		this(success, "");
 	}
@@ -50,15 +50,38 @@ public class JSONResultUtil<T> implements Serializable {
 		this.data = data;
 	}
 
+	/********* S 返回正确的结果集 *************/
+
 	/**
 	 * 返回正确结果不带数据
 	 * 
 	 * @return
 	 */
-	public static JSONResultUtil<Object> ok() {
-		return new JSONResultUtil<Object>(true);
+	public static <T> JSONResultUtil<T> ok() {
+		return new JSONResultUtil<T>(true);
 	}
 
+	/**
+	 * 返回正确结果不带数据带消息
+	 * 
+	 * @return
+	 */
+	public static <T> JSONResultUtil<T> okWithMsg(String msg) {
+		return new JSONResultUtil<T>(true, msg);
+	}
+
+	/**
+	 * 返回正确结果不带数据带消息
+	 * 
+	 * @return
+	 */
+	public static <T> JSONResultUtil<T> okWithMsgAndData(String msg, T data) {
+		return new JSONResultUtil<T>(true, msg);
+	}
+
+	/********* E 返回正确的结果集 *************/
+
+	/********* S 返回错误的结果集 *************/
 	/**
 	 * 返回错误的结果带错误信息
 	 * 
@@ -68,4 +91,15 @@ public class JSONResultUtil<T> implements Serializable {
 	public static JSONResultUtil<Object> error(String msg) {
 		return new JSONResultUtil<Object>(false, msg);
 	}
+
+	/**
+	 * 返回错误的结果带错误信息、数据
+	 * 
+	 * @param msg
+	 * @return
+	 */
+	public static <T> JSONResultUtil<T> errorWithData(String msg, T data) {
+		return new JSONResultUtil<T>(false, msg, data);
+	}
+	/********* E 返回错误的结果集 *************/
 }

@@ -36,6 +36,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- spring-boot整合mybatis -->
@@ -97,14 +98,14 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
-		
+
 		<!-- 阿里的fastjson用于手动转JSON -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.56</version>
 		</dependency>
-		
+
 		<!--httpclient相关包 -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -148,8 +149,8 @@
 			<artifactId>tika-parsers</artifactId>
 			<version>1.17</version>
 		</dependency>
-		
-		<!-- zxing生成二維碼  -->
+
+		<!-- zxing生成二维码 -->
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
@@ -173,6 +174,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
+				<!-- spring热部署 -->
+				<!-- <dependencies> <dependency> <groupId>org.springframework</groupId> 
+					<artifactId>springloaded</artifactId> <version>1.2.6.RELEASE</version> </dependency> 
+					</dependencies> -->
 			</plugin>
 		</plugins>
 	</build>
