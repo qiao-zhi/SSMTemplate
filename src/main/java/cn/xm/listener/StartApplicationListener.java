@@ -37,7 +37,6 @@ public class StartApplicationListener implements ServletContextListener {
 				}
 
 				doCreateAdmin();
-
 			}
 
 			private void doCreateAdmin() {
