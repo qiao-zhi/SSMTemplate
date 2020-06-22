@@ -5,9 +5,10 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//系统文档表
+//系统文档表(ID手动生成)
 @Entity
 public class Document {
+	
 	@Id
 	private String id;
 

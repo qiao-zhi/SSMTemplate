@@ -5,9 +5,8 @@ import javax.persistence.Entity;
 import cn.xm.bean.AbstractUUIDEntity;
 
 /**
- * 养殖场
+ *  订单表
  */
-
 @Entity(name = "order_table")
 public class Order extends AbstractUUIDEntity {
 
