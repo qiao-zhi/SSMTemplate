@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.alibaba.fastjson.JSONObject;
 
 public class WebUtils {
 
@@ -82,6 +85,11 @@ public class WebUtils {
 
 	public static void writeJsToResponse(HttpServletResponse response, String content) {
 		writeToResponse(response, "text/javascript", "UTF-8", content);
+	}
+
+	public static void writeJsonToResponse(ServletResponse response, Object obj) {
+		writeToResponse((HttpServletResponse) response, "application/json; charset=utf-8", "UTF-8",
+				JSONObject.toJSONString(obj));
 	}
 
 	public static void writeToResponse(HttpServletResponse response, String contentType, String encoding,
