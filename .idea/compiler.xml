@@ -9,8 +9,8 @@
         <module name="springboot-ssm" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="springboot-ssm" target="1.7" />
+    <bytecodeTargetLevel target="8">
+      <module name="springboot-ssm" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
