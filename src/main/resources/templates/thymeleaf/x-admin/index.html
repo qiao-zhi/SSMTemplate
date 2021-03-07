@@ -92,7 +92,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li th:if="${session.user.roles} eq '系统管理员'">
-                        <a _href="/message/add.html">
+                        <a _href="/message/add-custom.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>录入信息</cite>
                         </a>
@@ -101,6 +101,22 @@
                         <a _href="/message/list.html">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>信息列表</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+            
+            <li th:if="${session.user.roles} eq '系统管理员'">
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>系统设置</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="/system-setting/list.html">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>设置列表</cite>
                         </a>
                     </li >
                 </ul>

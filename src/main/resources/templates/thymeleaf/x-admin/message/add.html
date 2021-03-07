@@ -59,6 +59,16 @@
                   autocomplete="off" class="layui-input"/>
               </div>
           </div>
+         <div class="layui-form-item">
+             <label for="messageblank" class="layui-form-label">
+                 <span class="x-red">*</span>所属类型
+             </label>
+             <div class="layui-input-inline">
+                 <select name="messageblank">
+                     <option th:each="settingValue:${settingValues}" th:text="${settingValue}" th:value="${settingValue}"></option>
+                 </select>
+             </div>
+         </div>          
           <div class="layui-form-item">
               <label for="L_email" class="layui-form-label">
                   <span class="x-red">*</span>内容
@@ -89,6 +99,7 @@
           form.on('submit(add)', function(data){
         	  var data = {
         			 "name":$('[name="blogtitle"]').val(),
+        			 "messageblank":$('[name="messageblank"]').val(),
         			 "content":editor.html()
         	  }
        	    //异步提交数据

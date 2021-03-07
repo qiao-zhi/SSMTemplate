@@ -1,6 +1,6 @@
-var pageUrl = "/message/page.html";
-var deleteUrl = "/message/delete.html";
-var updateUrl = "/message/update-custom.html";
+var pageUrl = "/system-setting/page.html";
+var deleteUrl = "/system-setting/delete.html";
+var updateUrl = "/system-setting/update.html";
 
 $(function(){
 	queryFY();
@@ -21,17 +21,14 @@ function showTable(pageInfo) {
         var index = (pageNum - 1) * pageSize + i + 1;
         var tr = "<tr>"
             +'<td>'+index+'</td>'
-            +'<td>'+replaceNull(beans[i].id)+'</td>'
-            +'<td>'+replaceNull(beans[i].name)+'</td>'
-            +'<td>'+replaceNull(beans[i].messageblank)+'</td>'
-            +'<td>'+replaceNull(beans[i].createtime)+'</td>'
+            +'<td>'+replaceNull(beans[i].settingKey)+'</td>'
+            +'<td>'+replaceNull(beans[i].settingLabel)+'</td>'
+            +'<td>'+replaceNull(beans[i].settingValue)+'</td>'
             +'<td>';
 	        if(isAdmin()){
 	        	tr+='<a href=javascript:void(0) title="修改" onclick="update(\''+beans[i].id+'\', 800, 400)"><i class="layui-icon">&#xe642;</i></a>'
-	        		+'<a href=javascript:void(0) title="删除" onclick="remove(\''+beans[i].id+'\')"><i class="layui-icon">&#xe640;</i></a>'
 	        }
             
-	        tr+='<a href="/message/detail/'+beans[i].id+'" target="_blank" title="查看详情"><i class="layui-icon">&#xe615;</i></a>';
         	tr +='</td></tr>'
         		
         $("#tbody").append(tr);

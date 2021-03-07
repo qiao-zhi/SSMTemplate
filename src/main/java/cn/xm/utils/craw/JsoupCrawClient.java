@@ -26,7 +26,7 @@ public class JsoupCrawClient {
 
     public static void main(String[] args) {
         // 收集所有的二手房的基地址
-        String baseurl = "https://nanjing.esf.fang.com/newsecond/esfcities.aspx";
+/*        String baseurl = "https://nanjing.esf.fang.com/newsecond/esfcities.aspx";
         String s = JsoupCrawUtils.requestURL(baseurl);
         Elements elements = JsoupCrawUtils.extractTagBySelector(s, "a[href*=esf.fang.com]", "a[class=red]");
         Iterator<Element> iterator = elements.iterator();
@@ -48,7 +48,7 @@ public class JsoupCrawClient {
             } else {
                 crawAreaInfo(BASE_PATH + url);
             }
-        });
+        });*/
     }
 
     /**

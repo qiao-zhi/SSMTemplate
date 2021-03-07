@@ -47,35 +47,35 @@
     <div class="x-body layui-anim layui-anim-up">
     
      <form class="layui-form">
+          <input id="beanId" th:value="${bean.id}" type="hidden"/>
           <div class="layui-form-item">
-              <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>信息标题
+              <label for="settingKey" class="layui-form-label">
+                  <span class="x-red">*</span>key
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_blogtitle" name="blogtitle" lay-verify="required"
-                  autocomplete="off" class="layui-input" th:value="${bean.name}"/>
+                  <input type="text" id="settingKey" name="settingKey" lay-verify="required" readonly="readonly"
+                  autocomplete="off" class="layui-input" th:value="${bean.settingKey}"/>
               </div>
           </div>
          <div class="layui-form-item">
-             <label for="messageblank" class="layui-form-label">
-                 <span class="x-red">*</span>所属类型
+             <label for="settingLabel" class="layui-form-label">
+                 <span class="x-red">*</span>标签
              </label>
              <div class="layui-input-inline">
-                 <select name="messageblank">
-                     <option th:each="settingValue:${settingValues}" th:selected="${settingValue eq bean.messageblank}" th:text="${settingValue}" th:value="${settingValue}"></option>
-                 </select>
+                 <input type="text" id="settingLabel" name="settingLabel" lay-verify="required"
+                        autocomplete="off" class="layui-input" th:value="${bean.settingLabel}"/>
              </div>
-         </div>          
-          <div class="layui-form-item">
-              <label for="L_email" class="layui-form-label">
-                  <span class="x-red">*</span>内容
-              </label>
-              <div class="layui-input-inline">
-                  <textarea name="contentEditor" th:text="${bean.content}" id="test" cols="100" rows="8" style="width:700px;height:200px;visibility:hidden;"></textarea>
-              </div>
-              <input id="blogId" th:value="${bean.id}"/>
-          </div>
-     	  
+         </div>
+         <div class="layui-form-item">
+             <label for="settingValue" class="layui-form-label">
+                 <span class="x-red">*</span>value
+             </label>
+             <div class="layui-input-inline">
+                 <input type="text" id="settingValue" name="settingValue" lay-verify="required"
+                        autocomplete="off" class="layui-input" th:value="${bean.settingValue}"/>
+             </div>
+         </div>
+
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
@@ -96,10 +96,9 @@
           //监听提交
           form.on('submit(add)', function(data){
         	  var data = {
-        			 "name":$('[name="blogtitle"]').val(),
-        			 "messageblank":$('[name="messageblank"]').val(),
-        			 "content":editor.html(),
-        			 "id":$("#blogId").val()
+                  "settingLabel":$('[name="settingLabel"]').val(),
+                  "settingValue":$('[name="settingValue"]').val(),
+                  "id":$("#beanId").val()
         	  }
        	    //异步提交数据
          	    $.post("./doUpdate.html",data,function(response){

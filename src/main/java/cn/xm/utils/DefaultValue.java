@@ -24,4 +24,6 @@ public class DefaultValue {
 	 */
 	public static final int TOKEN_UPDATE_TIME = 1;
 	
+	public static final String SYSTEM_SETTING_KEY_MESSAGE_TYPE = "messageType";
+	
 }

@@ -17,7 +17,7 @@
     
     <!--自己写的JS  -->
     <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/PublicFunctions.js'}"></script>
-    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/message.js'}"></script>
+    <script type="text/javascript" th:src="${#httpServletRequest.getContextPath()+'/static/x-admin/MyJs/systemSetting.js'}"></script>
     
     <span th:if="${session.user.roles} eq '系统管理员'">
     	<script>
@@ -49,10 +49,9 @@
         <thead>
           <tr>
             <th>序号</th>
-            <th>ID</th>
-            <th>主题</th>
-            <th>类型</th>
-            <th>创建时间</th>
+            <th>key</th>
+            <th>标签</th>
+            <th>value</th>
             <th>操作</th></tr>
         </thead>
         <tbody id="tbody">
