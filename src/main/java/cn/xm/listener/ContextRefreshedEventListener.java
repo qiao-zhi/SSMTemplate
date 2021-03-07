@@ -44,7 +44,11 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
         log.debug("created end");
     }
 
+    /**
+     * 创建默认的系统设置信息
+     */
     private void createSystemSetting() {
+    	// 1. 创建消息类型字典设置
         String messageTypeKey = DefaultValue.SYSTEM_SETTING_KEY_MESSAGE_TYPE;
         SystemSetting messageType = systemSettingService.getBySettingKey(messageTypeKey);
         if (messageType == null) {
@@ -62,7 +66,6 @@ public class ContextRefreshedEventListener implements ApplicationListener<Contex
      */
     private void createAdminUser() {
         String adminUserName = "admin";
-        UserService userService = SpringBootUtils.getBean(UserService.class);
         User findUserByUsername = userService.findUserByUsername(adminUserName);
         if (findUserByUsername == null) {
             User user = new User();
